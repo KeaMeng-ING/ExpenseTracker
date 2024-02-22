@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Income Page</title>
+        <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
+    </head>
+<body>
+    <h1>Income Page</h1>
+
+<main>
+    <header>
+        <div>
+            <h5>Total Balance</h5>
+            <a href="{% url 'home' %}" style="text-decoration: none; color: white;"><span id="balance">${{balance}}</span></a>
+        </div>
+        <div>
+            <h5>Income</h5>
+            <a href="{% url 'income' %}" style="text-decoration: none; color: white;"><span id="income">${{income}}</span></a>
+        </div>
+        <div>
+            <h5>Expense</h5>
+            <a href="{% url 'expense' %}" style="text-decoration: none; color: white;"><span id="expense">${{expense}}</span></a>
+        </div>
+    </header>
+
+    <section>
+        <h3>Transactions</h3>
+        <ul id="transactionList" class="incomeTransactions">
+            {% for transaction in income_tran %}
+            <li class="transactionItem">
+                <b>{{ transaction.title }}</b>
+                <span class="amount">${{ transaction.amount }}</span>
+                <span class="date">{{ transaction.date|date:"M j, P" }}</span>
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+        <div id="status"></div>
+    </section>
+
+</main>
+
+
+</body>
+</html>

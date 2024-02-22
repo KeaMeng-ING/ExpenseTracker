@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
+  </head>
+  <body>
+    <h1>Expense Tracker</h1>
+
+    <main>
+      <header>
+        <div>
+          <h5>Total Balance</h5>
+          <span id="balance">${{balance}}</span>
+        </div>
+        <div>
+          <h5>Income</h5>
+          <a href="{% url 'income' %}" style="text-decoration: none; color: white;"><span id="income">${{income}}</span></a>
+        </div>
+        <div>
+          <h5>Expense</h5>
+          <a href="{% url 'expense' %}" style="text-decoration: none; color: white;"><span id="income">${{expense}}</span></a>
+        </div>
+      </header>
+
+      <section>
+        <h3>Transactions</h3>
+        <ul id="transactionList"></ul>
+        <div id="status"></div>
+      </section>
+
+      <section>
+        <h3>Add Transaction</h3>
+
+        <form id="transactionForm" action="{% url 'add-transaction' %}" method="POST">
+          {% csrf_token %}
+          <div>
+            <label for="type">Type</label>
+            <select name="type" id="type" required>
+              <option value="">Select type</option>
+              <option value="Expense">Expense</option>
+              <option value="Income">Income</option>
+            </select>
+          </div>
+          <div>
+            <label for="name">Name</label>
+            <input type="text" name="title" required />
+          </div>
+          <div>
+            <label for="amount">Amount $</label>
+            <input type="number" name="amount" value="0" min="0.01" step="0.01" required />
+          </div>
+          <div>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" required />
+        </div>
+          <button  type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+    <script>
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '-' + mm + '-' + dd;
+      document.getElementById('date').value = today;
+    </script>
+  </body>
+</html>
